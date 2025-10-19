@@ -1,7 +1,8 @@
 class Animal:
-    alive = []
+    alive: list["Animal"] = []
 
-    def __init__(self, name: str,
+    def __init__(self,
+                 name: str,
                  health: int = 100,
                  hidden: bool = False) -> None:
         self.name = name
@@ -13,8 +14,8 @@ class Animal:
         if not Animal.alive:
             return "No animals are alive 🐾"
         return (f"{{"
-                f"Name: {self.name}, Health: {self.health},"
-                f" Hidden: {self.hidden}}}")
+                f"Name: {self.name}, Health: {self.health}, "
+                f"Hidden: {self.hidden}}}")
 
 
 class Herbivore(Animal):
@@ -26,10 +27,11 @@ class Herbivore(Animal):
 class Carnivore(Animal):
 
     @classmethod
-    def bite(cls, herbivore: Herbivore) -> str | None:
-        if isinstance(herbivore, cls) or herbivore.hidden is True:
-            return f"{cls} cannot bite {herbivore} rabbit"
+    def bite(cls,
+             target: Herbivore) -> str | None:
+        if isinstance(target, cls) or target.hidden is True:
+            pass
         else:
-            herbivore.health -= 50
-            if herbivore.health <= 0:
-                Animal.alive.remove(herbivore)
+            target.health -= 50
+            if target.health <= 0:
+                Animal.alive.remove(target)
